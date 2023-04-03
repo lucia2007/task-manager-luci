@@ -3,9 +3,11 @@ from taskmanager import app, db
 from taskmanager.models import Category, Task
 
 
+# this function is used for displaying information
 @app.route("/")
 def home():
-    return render_template("tasks.html")
+    tasks = list(Task.query.order_by(Task.id).all())
+    return render_template("tasks.html", tasks=tasks)
 
 @app.route("/categories")
 def categories():
@@ -39,6 +41,8 @@ def delete_category(category_id):
     return redirect(url_for("categories"))
 
 # tasks
+
+
 
 @app.route("/add_task", methods=["GET", "POST"])
 def add_task():
